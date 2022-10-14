@@ -44,7 +44,8 @@ def login(request):
 
 
 def home(request):
-    if request.user:
+    if request.method == 'GET':
+        if request.user.is_anonymous:  # 로그인한 사용자인지 아닌지 확인 해주는 코드
+            return redirect('user:login')
+        
         return render(request, 'home.html')
-    else:
-        return HttpResponse('사용자가 아닙니다.')
